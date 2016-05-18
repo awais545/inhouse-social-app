@@ -38,7 +38,7 @@ gem 'omniauth-google-oauth2'
 gem 'koala'
 gem 'twitter'
 gem 'instagram'
-gem 'google-api-client', require: 'google/api_client'
+gem 'google-api-client', '0.9'
 
 group :production do  
   gem 'rails_12factor'
