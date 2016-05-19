@@ -31,8 +31,6 @@ module Socialable
       #
       # @return [String]
       def auth_token
-        return regenerate_auth_token if expired?
-
         authentication.auth_token
       end
 
@@ -51,13 +49,21 @@ module Socialable
         authentication.auth_token
       end
 
+      def pages
+        @pages ||= client.get_connections('me', 'accounts')
+      end
+
+      def get_page_access_token(page_id)
+        client.get_page_access_token(page_id)
+      end
+
+      def post_over_page(page_id, message, picture, link, options = {})
+        client.put_connections('306393736195548', 'feed', :message => 'Test message', :picture => "http://art.ngfiles.com/images/328000/328430_jazza_ryuk-death-note.jpg", link: 'http://art.ngfiles.com/images/328000/328430_jazza_ryuk-death-note.jpg' )
+      end
+
       def oauth
         @oauth ||= Koala::Facebook::OAuth.new(Rails.configuration.facebook.id, Rails.configuration.facebook.secret)
       end
-    end
-
-    def create_post()
-      @page_graph.put_connections(page_id, 'feed', :message => message, :picture => picture_url, :link => link_url)
     end
   end
 end
